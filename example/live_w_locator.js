@@ -36,7 +36,7 @@ $(function() {
             });
         },
         handleError: function(err) {
-            console.log(err);
+            alert(err);
         },
         checkCapabilities: function() {
             var track = Quagga.CameraAccess.getActiveTrack();
@@ -97,6 +97,7 @@ $(function() {
                 devices.forEach(function(device) {
                     var $option = document.createElement("option");
                     $option.value = device.deviceId || device.id;
+                    alert($option.value);
                     $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
                     $option.selected = streamLabel === device.label;
                     $deviceSelection.appendChild($option);
@@ -215,7 +216,7 @@ $(function() {
                             format: "ean_reader",
                             config: {
                                 supplements: [
-                                    'ean_5_reader', 'ean_2_reader'
+                                    'ean_8_reader','ean_5_reader', 'ean_2_reader'
                                 ]
                             }
                         }];
@@ -241,11 +242,11 @@ $(function() {
                 patchSize: "medium",
                 halfSample: true
             },
-            numOfWorkers: 2,
+            numOfWorkers: 0,
             frequency: 10,
             decoder: {
                 readers : [{
-                    format: "code_128_reader",
+                    format: "ean_reader",
                     config: {}
                 }]
             },
@@ -266,16 +267,16 @@ $(function() {
                 result.boxes.filter(function (box) {
                     return box !== result.box;
                 }).forEach(function (box) {
-                    Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+                    //Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
                 });
             }
 
             if (result.box) {
-                Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+               // Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
             }
 
             if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+              //  Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
             }
         }
     });

@@ -8,6 +8,19 @@ export function enumerateDevices() {
 };
 
 export function getUserMedia(constraints) {
+    if( navigator.userAgent.indexOf('UCBrowser') > -1) {
+        //alert(JSON.stringify(constraints))
+        constraints = {
+            video:true
+        };
+        //alert(JSON.stringify(constraints))
+        //alert(JSON.stringify(navigator.mediaDevices.getSupportedConstraints()));
+        if (navigator.mediaDevices
+            && typeof navigator.mediaDevices.getUserMedia === 'function') {
+            return navigator.mediaDevices
+                .getUserMedia(constraints);
+        }
+    }
     if (navigator.mediaDevices
             && typeof navigator.mediaDevices.getUserMedia === 'function') {
         return navigator.mediaDevices
